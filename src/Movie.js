@@ -4,6 +4,7 @@ import axios from "axios";
 import classes from "./Movie.module.css";
 import { truncStr } from "./utils";
 import { search } from "./utils";
+import Post from './Post'
 
 
 class MovieCard extends Component{
@@ -13,21 +14,33 @@ class MovieCard extends Component{
     geovalue: "",
     coordinate:null,
     location:null,
+    weatherinfo:null
   }
 
 
-  getUserAccount() {
+ /* 分部axios
+ 
+ getUserAccount() {
     return axios.get('https://api.weather.gov/points/' + this.state.geovalue[0]+','+this.state.geovalue[1]);
   }
   
   getUserPermissions() {
     return axios.get('/user/12345/permissions');
-  }
+  } */
   
   
 
   componentDidUpdate () {
+
+
     if ( this.state.geoloading ) {
+        if(!this.state.weatherinfo||(this.state.weatherinfo && this.state.weatherinfo[0]!==this.props.item.location.lat)){
+      /* if  
+        (this.state.weatherinfo && 
+          this.state.weatherinfo.lat !== this.props.item.location.lat && 
+          this.state.weatherinfo.lng !== this.props.item.location.lng){ */
+
+
       console.log(this.state.geovalue[0]);
         //if ( !this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.id) ) {
             //axios.get( 'https://api.weather.gov/points/39.7456,-97.0892' )
@@ -35,12 +48,16 @@ class MovieCard extends Component{
             //.get( 'https://api.weather.gov/points/' + this.state.geovalue[0]+','+this.state.geovalue[1])
                 .then( response => {
                      console.log(response);
-                     let secondlink=response.data.properties.county;
+                     let secondlink=response.data.properties.forecast;
                      console.log(secondlink)
                      axios.get( secondlink)
                      .then(
                        res=>{
                         console.log(res)
+                        this.setState({weatherinfo: res})
+
+                        //set state here 
+
                        }
                      )
                     //this.setState( { loadedPost: response.data } );
@@ -52,7 +69,9 @@ class MovieCard extends Component{
       // Both requests are now complete
     })); */
     }
+  
 }
+  }
 
   //sendWeatherDate = async e => {
     testsendWeatherDate = async e => {
@@ -117,6 +136,19 @@ class MovieCard extends Component{
 
   render() {
     const { accuracy_type, location, formatted_address } = this.props.item;
+
+/* 
+    let posts = <p style={{textAlign: 'center'}}>loading!</p>;
+        if (this.state.weatherinfo) {
+            posts = this.state.weatherinfo.data.properties.periods.map(post => {
+                return <Post 
+                    key={post.number} 
+                    title={post.name} 
+                    author={post.temperature}
+                     
+                    />;
+            });
+        } */
     
     /* let posts = location.map(loc => {
       return (
@@ -129,6 +161,7 @@ class MovieCard extends Component{
       )
   }); */
   return (
+    <>
     <div
       className={classes.Container}
       /* style={{
@@ -150,6 +183,8 @@ class MovieCard extends Component{
 
       </div>
     </div>
+{/*     {posts}
+ */}    </>
   );
 }
 } 

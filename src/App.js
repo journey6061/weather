@@ -8,21 +8,22 @@ class App extends Component {
   state = {
     movies: null,
     loading: false,
-    value: ""
+    value: "tttttest"
   };
 
-  search = async val => {
+  search = async tt => {
     this.setState({ loading: true });
     const results = await search(
-      `https://api.geocod.io/v1.4/geocode?q=${val}&api_key=25de1572225915e7eee55d929d76e4e65e61e62`
+      `https://api.geocod.io/v1.4/geocode?q=${tt}&api_key=25de1572225915e7eee55d929d76e4e65e61e62`
 
       //`https://api.themoviedb.org/3/search/movie?query=${val}&api_key=dbc0a6d62448554c27b6167ef7dabb1b`
       //curl "https://api.geocod.io/v1.4/geocode?q=1109+N+Highland+St%2c+Arlington+VA&api_key=YOUR_API_KEY"
 
     );
-    const movies = results;
-
-    this.setState({ movies, loading: false });
+    const testmovies = results;
+      console.log(results)
+    this.setState({ movies:testmovies, loading: false });
+    //console.log(this.state.movies)
   };
 
   onChangeHandler = async e => {
@@ -31,7 +32,7 @@ class App extends Component {
   };
 
   get renderMovies() {
-    let movies = <h1>There's no movies</h1>;
+    let movies = <h1>There's no test!</h1>;
     if (this.state.movies) {
       movies = <Movies list={this.state.movies} />;
     }
