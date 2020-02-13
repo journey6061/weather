@@ -11,10 +11,11 @@ class MovieCard extends Component{
   state={
     geo: null,
     geoloading: false,
-    geovalue: "",
+    geovalue: null,
     coordinate:null,
     location:null,
-    weatherinfo:null
+    weatherinfo:null,
+    testopen:null,
   }
 
 
@@ -34,7 +35,9 @@ class MovieCard extends Component{
 
 
     if ( this.state.geoloading ) {
-        if(!this.state.weatherinfo||(this.state.weatherinfo && this.state.weatherinfo[0]!==this.props.item.location.lat)){
+        //if(!this.state.weatherinfo||(this.state.weatherinfo && this.state.weatherinfo[1]!==this.props.item.location.lat)){
+
+          if(this.state.testopen===null||(this.state.testopen && this.props.item.location.lat!==this.state.testopen)){
       /* if  
         (this.state.weatherinfo && 
           this.state.weatherinfo.lat !== this.props.item.location.lat && 
@@ -54,7 +57,13 @@ class MovieCard extends Component{
                      .then(
                        res=>{
                         console.log(res)
-                        this.setState({weatherinfo: res})
+                        this.setState({weatherinfo: res.data.properties.periods[0]})
+                        console.log(this.state.weatherinfo)
+
+
+                        //传给父
+
+                        this.props.onassFather(this.state.weatherinfo.name)
 
                         //set state here 
 
@@ -68,7 +77,9 @@ class MovieCard extends Component{
     .then(axios.spread(function (acct, perms) {
       // Both requests are now complete
     })); */
+    this.setState({testopen:this.state.geovalue[0]})
     }
+   
   
 }
   }
@@ -137,18 +148,24 @@ class MovieCard extends Component{
   render() {
     const { accuracy_type, location, formatted_address } = this.props.item;
 
-/* 
+
     let posts = <p style={{textAlign: 'center'}}>loading!</p>;
         if (this.state.weatherinfo) {
-            posts = this.state.weatherinfo.data.properties.periods.map(post => {
+            /* posts = this.state.weatherinfo.data.properties.periods.map(post => {
                 return <Post 
                     key={post.number} 
                     title={post.name} 
                     author={post.temperature}
                      
                     />;
-            });
-        } */
+            }); */
+            posts = <Post 
+                  key={this.state.weatherinfo.number} 
+                  title={this.state.weatherinfo.temperature} 
+                  author={this.state.weatherinfo.name}
+                   
+                  />;
+        }
     
     /* let posts = location.map(loc => {
       return (
@@ -183,8 +200,10 @@ class MovieCard extends Component{
 
       </div>
     </div>
-{/*     {posts}
- */}    </>
+    <div>
+     {posts}
+     </div>
+    </>
   );
 }
 } 

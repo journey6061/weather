@@ -31,6 +31,7 @@ class App extends Component {
     this.setState({ value: e.target.value });
   };
 
+
   get renderMovies() {
     let movies = <h1>There's no test!</h1>;
     if (this.state.movies) {
