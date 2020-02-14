@@ -31,11 +31,20 @@ class App extends Component {
     this.setState({ value: e.target.value });
   };
 
+  /* testapp = () => {
+    
+   console.log('it is')
+  };
+  
+
+  handleSelect(){
+    console.log('it is')
+  } */
 
   get renderMovies() {
     let movies = <h1>There's no test!</h1>;
     if (this.state.movies) {
-      movies = <Movies list={this.state.movies} />;
+      movies = <Movies list={this.state.movies} /* testapp={this.testapp} *//>;
     }
 
     return movies;

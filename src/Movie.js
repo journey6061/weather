@@ -65,6 +65,8 @@ class MovieCard extends Component{
 
                         this.props.onassFather(this.state.weatherinfo.name)
 
+                        /* this.props.handleSelect(this.state.weatherinfo.name); */
+
                         //set state here 
 
                        }
@@ -201,7 +203,7 @@ class MovieCard extends Component{
       </div>
     </div>
     <div>
-     {posts}
+    {/*  {posts} */}
      </div>
     </>
   );
